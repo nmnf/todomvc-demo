@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Route</title>
+	<script type="text/javascript" src="node_modules/angular/angular.js"></script>
+	<script type="text/javascript" src="node_modules/angular-route/angular-route.js"></script>
+</head>
+<body ng-app="myApp">
+	<ul>
+		<li><a href="#/a">A</a></li>
+		<li><a href="#/b">B</a></li>
+		<li><a href="#/c">C</a></li>
+	</ul>
+	<div ng-view></div>
+	<script>
+		var app = angular.module('myApp',['ngRoute']);
+		app.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider){
+			$routeProvider
+			.when('/student/:name?',{
+				controller:'Acontroller',
+				templateUrl:'a_temp'
+			})
+			.when('/a',{
+				controller:'Acontroller',
+				templateUrl:'a_temp'
+			})
+			.when('/b',{
+				controller:'Bcontroller',
+				templateUrl:'a_temp'
+			})
+			.when('/c',{
+				controller:'Ccontroller',
+				templateUrl:'a_temp'
+			})
+			.otherwise({
+				controller:'Acontroller',
+				templateUrl:'a_temp'
+			});
+			$locationProvider.hashPrefix("");
+		}]);
+		app.controller('Acontroller',['$scope',function($scope){
+			$scope.title="这是A页面";
+		}]);
+		app.controller('Bcontroller',['$scope',function($scope){
+			$scope.title="这是B页面";
+		}]);
+		app.controller('Ccontroller',['$scope',function($scope){
+			$scope.title="这是C页面";
+		}]);
+		
+	</script>
+	<script type="text/ng-template" id="a_temp"><h1>{{title}}</h1></script>
+</body>
+</html>
